@@ -15,9 +15,9 @@
                         <td>{{rol.nombre}}</td>
                         <td>{{convertirFecha(rol.created_at)}}</td>
                         <td class="d-flex">
-                            <div class="btn btn-primary m-auto" @click="edita(index)">
+                            <button class="btn btn-primary m-auto" @click="edita(index)" :disabled="rolUserLog != 'ADMIN'">
                                 Editar
-                            </div>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -26,7 +26,7 @@
 </template>
 <script>
 export default {
-    props: ['roles'],
+    props: ['roles', 'rolUserLog'],
     methods:{
         convertirFecha(fech){
             return fech.split('T')[0]

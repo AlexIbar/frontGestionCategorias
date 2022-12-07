@@ -16,10 +16,21 @@ const headers = ()=>{
     }
 }
 
+const isRegistre = ()=>{
+    let usuario = sessionStorage.getItem("usuario")
+    let authorization = sessionStorage.getItem("authorization")
+    let rol = sessionStorage.getItem("rol")
+    if(usuario && authorization && rol){
+        return true
+    }
+    return false
+}
+
 const app =createApp(App)
 app.use(router)
 app.use(VueAxios, axios)
 app.config.globalProperties.$emitter = emitter
 app.config.globalProperties.$path=()=>"http://localhost:8000/api"
 app.config.globalProperties.$header=headers
+app.config.globalProperties.$isRegistre = isRegistre
 app.mount("#app");

@@ -9,7 +9,7 @@
                     <div class="mt-5 d-flex m-auto" style="max-width:600px">
                     <input type="email" v-model="newCategoria.nombre" placeholder="Nombre" class="form-control m-1" id="idCategoria" aria-describedby="emailHelp">
                     <input type="text" v-model="newCategoria.descripcion" placeholder="Descripción" class="form-control m-1" id="idDescripcion" aria-describedby="emailHelp"/>
-                    <div class="btn btn-primary m-1" @click="crearNuevaCategoria">Agregar</div>
+                    <button class="btn btn-primary m-1" @click="crearNuevaCategoria" :disabled="rolUserLog != 'ADMIN'">Agregar</button>
                 </div>
             </div>
         </div>
@@ -30,14 +30,14 @@
                         <td>{{categoria.nombre}}</td>
                         <td>{{categoria.descripcion}}</td>
                         <td>
-                            <div class="btn btn-primary m-auto" @click="editar(index)">
+                            <button class="btn btn-primary m-auto" @click="editar(index)"  :disabled="rolUserLog != 'ADMIN'">
                                 Editar
-                            </div>
+                            </button>
                         </td>
                         <td>
-                            <div class="btn btn-danger m-auto" @click="eliminar(index)">
+                            <button class="btn btn-danger m-auto" @click="eliminar(index)"  :disabled="rolUserLog != 'ADMIN'">
                                 Eliminar
-                            </div>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -74,11 +74,16 @@ export default {
                 nombre:"",
                 descripcion:""
             },
-            categorias:[]
+            categorias:[],
+            rolUserLog:null,
         }
     },
     created(){
+        if (!this.$isRegistre()) {
+            this.$router.push('/login')
+        }
         this.buscarCategorias()
+        this.rolUserLog = sessionStorage.getItem("rol")
     },
     methods:{
         close(){

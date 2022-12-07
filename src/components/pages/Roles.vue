@@ -4,7 +4,7 @@
         <div class="container">
             <div class="mt-5 d-flex m-auto" style="max-width:600px">
                 <input type="email" v-model="newRol" placeholder="Nuevo rol" class="form-control m-1" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div class="btn btn-primary m-1" @click="crearNuevoRol">Agregar</div>
+                <button class="btn btn-primary m-1" @click="crearNuevoRol" :disabled="rolUserLog != 'ADMIN'">Agregar</button>
             </div>
         </div>
         <div v-if="editar != null" class="position-absolute mostrar-editar d-flex justify-content-center align-items-center">
@@ -15,11 +15,11 @@
                 </div>
                 <div class="container d-flex mb-4">
                     <input type="text" v-model="editar.nombre" class="form-control m-1" >
-                    <div class="btn btn-primary m-1" @click="guardarEdicion">Aceptar</div>
+                    <button class="btn btn-primary m-1" @click="guardarEdicion">Aceptar</button>
                 </div>
             </div>
         </div>
-        <TablaRoles :roles="roles"/>
+        <TablaRoles :roles="roles" :rolUserLog="rolUserLog"/>
     </div>
 </template>
 <script>
@@ -39,11 +39,16 @@ export default {
                 headers:{
                     "Authorization": "Bearer "+sessionStorage.getItem("authorization")
                 }
-            }
+            },
+            rolUserLog:null,
         }
     },
     created(){
+        if (!this.$isRegistre()) {
+            this.$router.push('/login')
+        }
         this.buscarRoles()
+        this.rolUserLog = sessionStorage.getItem("rol")
     },
     mounted(){
         this.$emitter.on("editar-rol", indice=>{

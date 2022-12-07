@@ -27,6 +27,11 @@ export default {
             contrasenia: ""
         }
     },
+    created(){
+        if(this.$isRegistre()){
+            location.href='/'
+        }
+    },
     methods: {
         iniciar() {
             this.axios.post(this.$path()+"/auth",{
@@ -38,6 +43,7 @@ export default {
                     sessionStorage.setItem("rol",jwt_token(resp.data).rol)
                     sessionStorage.setItem("usuario",jwt_token(resp.data).id)
                     sessionStorage.setItem("authorization", resp.data)
+                    location.href='/'
                 }
             })    
             }
