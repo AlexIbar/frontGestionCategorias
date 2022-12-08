@@ -35,7 +35,25 @@ El sistema nos permite realizar la gestion de post, categorias, roles y usuarios
   npm run build #Compilar a producción
 ```
 
-Tener en cuenta que para que el front pueda funcionar el proyecto del back debe de estar corriendo
+Tener en cuenta que para que el front pueda funcionar el proyecto del back debe de estar corriendo y se debe actualizar
+
+## Se debe tener previamente
+
+```sql
+    insert into rols(nombre) VALUES ('ADMIN')
+    insert into rols(nombre) VALUES ('LECTOR')
+    insert into rols(nombre) VALUES ('AUTOR')
+```
+El rol ADMIN -> Es el que se encargara de crear los usuarios y roles asociados a los usuarios
+
+```sql
+    insert into usuarios(nombre, correo, password, id_rol) VALUES('Administrador', 'admin@admin.com','$2y$12$oeenqWrODpkQua6rR1P97OHpF5Gw4fe21AbVph6TbmdfYJPmLiVny', 1)
+    -- La contraseña es: laura.norena@gmail.com
+```
+
+## Nota
+
+Es importante descargar nuevamente el repositorio de Github porque el proyecto esta actualizado, donde se mejoraron algunos bugs que encontramos y ademas esta configurada la encryptación de la contraseña
 
 ### Capturas
 
